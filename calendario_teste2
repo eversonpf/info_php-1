@@ -1,0 +1,48 @@
+<?php
+
+$dataStr = "20/01/2000";
+$data = explode("/", $dataStr);
+$dia = $data[0];
+$mes = $data[1];
+$ano = $data[2];
+
+if ($dia < 1 || $dia > 31) {
+    $dia = 1;
+}
+
+if ($mes < 1 || $mes > 12) {
+    $mes = 1;
+}
+
+$meses30dias = [4, 6, 9, 11];
+$meses31dias = [1, 3, 5, 7, 8, 10, 12];
+
+if (in_array($mes, $meses30dias) && $dia > 30) {
+    $dia = 1;
+    $mes += 1;
+}
+
+if ($mes == 2) {
+    // Verifica se é um ano bissexto
+    $isBissexto = ($ano % 4 == 0 && ($ano % 100 != 0 || $ano % 400 == 0));
+    
+    if ($isBissexto && $dia > 29) {
+        $dia = 1;
+        $mes += 1;
+    } elseif (!$isBissexto && $dia > 28) {
+        $dia = 1;
+        $mes += 1;
+    }
+}
+
+if ($dia > 31) {
+    $dia = 1;
+    $mes += 1;
+}
+
+if ($mes > 12) {
+    $mes = 1;
+    $ano += 1;
+}
+
+echo "Data válida: $dia/$mes/$ano";
